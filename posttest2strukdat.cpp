@@ -7,17 +7,19 @@ struct AlatMusik {
     string kategori;
     float harga;
     string asalNegara;
+    int stok; // Menambahkan field untuk jumlah stok
 };
 
 AlatMusik listAlatMusik[100];  // Array untuk menyimpan data alat musik
 int jumlahAlatMusik = 0;        // Jumlah alat musik yang terdaftar
 
 // Fungsi untuk menambahkan alat musik baru
-void tambahAlatMusik(string nama, string kategori, float harga, string asalNegara) {
+void tambahAlatMusik(string nama, string kategori, float harga, string asalNegara, int stok) {
     listAlatMusik[jumlahAlatMusik].nama = nama;
     listAlatMusik[jumlahAlatMusik].kategori = kategori;
     listAlatMusik[jumlahAlatMusik].harga = harga;
     listAlatMusik[jumlahAlatMusik].asalNegara = asalNegara;
+    listAlatMusik[jumlahAlatMusik].stok = stok; // Mengisi stok
     jumlahAlatMusik++;
     cout << "Alat musik berhasil ditambahkan!" << endl;
 }
@@ -32,18 +34,20 @@ void tampilkanAlatMusik() {
             cout << i + 1 << ". Nama: " << listAlatMusik[i].nama
                  << ", Kategori: " << listAlatMusik[i].kategori
                  << ", Harga: " << listAlatMusik[i].harga
-                 << ", Asal Negara: " << listAlatMusik[i].asalNegara << endl;
+                 << ", Asal Negara: " << listAlatMusik[i].asalNegara
+                 << ", Stok: " << listAlatMusik[i].stok << endl; // Menampilkan stok
         }
     }
 }
 
 // Fungsi untuk mengupdate data alat musik berdasarkan index
-void updateAlatMusik(int index, string nama, string kategori, float harga, string asalNegara) {
+void updateAlatMusik(int index, string nama, string kategori, float harga, string asalNegara, int stok) {
     if (index >= 0 && index < jumlahAlatMusik) {
         listAlatMusik[index].nama = nama;
         listAlatMusik[index].kategori = kategori;
         listAlatMusik[index].harga = harga;
         listAlatMusik[index].asalNegara = asalNegara;
+        listAlatMusik[index].stok = stok; // Mengupdate stok
         cout << "Alat musik berhasil diperbarui!" << endl;
     } else {
         cout << "Indeks tidak valid!" << endl;
@@ -67,7 +71,7 @@ void hapusAlatMusik(int index) {
 int main() {
     int pilihan;
     do {
-        cout << "\nMenu:\n";
+        cout << "\nMenu Manajemen Toko Alat Musik:\n";
         cout << "1. Tambah Alat Musik\n";
         cout << "2. Tampilkan Alat Musik\n";
         cout << "3. Update Alat Musik\n";
@@ -79,6 +83,7 @@ int main() {
         if (pilihan == 1) {
             string nama, kategori, asalNegara;
             float harga;
+            int stok;
             cout << "Masukkan Nama: ";
             cin.ignore();
             getline(cin, nama);
@@ -89,13 +94,16 @@ int main() {
             cout << "Masukkan Asal Negara: ";
             cin.ignore();
             getline(cin, asalNegara);
-            tambahAlatMusik(nama, kategori, harga, asalNegara);
+            cout << "Masukkan Stok: ";
+            cin >> stok; // Input stok
+            tambahAlatMusik(nama, kategori, harga, asalNegara, stok);
         } else if (pilihan == 2) {
             tampilkanAlatMusik();
         } else if (pilihan == 3) {
             int index;
             string nama, kategori, asalNegara;
             float harga;
+            int stok;
             cout << "Masukkan indeks alat musik yang akan diupdate: ";
             cin >> index;
             cout << "Masukkan Nama baru: ";
@@ -108,7 +116,9 @@ int main() {
             cout << "Masukkan Asal Negara baru: ";
             cin.ignore();
             getline(cin, asalNegara);
-            updateAlatMusik(index - 1, nama, kategori, harga, asalNegara);
+            cout << "Masukkan Stok baru: ";
+            cin >> stok; // Input stok baru
+            updateAlatMusik(index - 1, nama, kategori, harga, asalNegara, stok);
         } else if (pilihan == 4) {
             int index;
             cout << "Masukkan indeks alat musik yang akan dihapus: ";
@@ -118,4 +128,3 @@ int main() {
     } while (pilihan != 5);
 
     return 0;
-}
